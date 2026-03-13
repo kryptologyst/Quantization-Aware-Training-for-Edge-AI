@@ -1,0 +1,45 @@
+# Device configuration for edge deployment
+device:
+  # Primary device selection
+  device_type: "cpu"  # cpu, cuda, mps, tpu
+  
+  # Fallback options
+  fallback_to_cpu: true
+  
+  # Edge device specific settings
+  edge_devices:
+    raspberry_pi:
+      cpu_cores: 4
+      memory_gb: 4
+      storage_gb: 32
+      os: "raspbian"
+      
+    jetson_nano:
+      cpu_cores: 4
+      gpu_cores: 128
+      memory_gb: 4
+      storage_gb: 16
+      os: "ubuntu"
+      
+    android:
+      min_api_level: 21
+      target_api_level: 33
+      architecture: "arm64-v8a"
+      
+    ios:
+      min_version: "12.0"
+      target_version: "16.0"
+      architecture: "arm64"
+      
+  # Performance optimization
+  optimization:
+    enable_mixed_precision: true
+    enable_tensorrt: false
+    enable_openvino: true
+    enable_coreml: false
+    
+  # Memory management
+  memory:
+    max_memory_usage: 0.8  # Fraction of available memory
+    enable_memory_mapping: true
+    cache_size_mb: 256

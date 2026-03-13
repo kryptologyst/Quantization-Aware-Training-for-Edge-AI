@@ -1,0 +1,66 @@
+# @package _global_
+
+# Default configuration for Quantization-Aware Training
+defaults:
+  - device: cpu
+  - quant: int8_qat
+  - comms: mqtt_local
+
+# Project metadata
+project:
+  name: "quantization-aware-training"
+  version: "1.0.0"
+  description: "Modern QAT for edge AI deployment"
+
+# Data configuration
+data:
+  dataset: "mnist"
+  batch_size: 128
+  num_workers: 4
+  data_dir: "data/raw"
+  processed_dir: "data/processed"
+  
+# Model configuration
+model:
+  architecture: "simple_cnn"
+  input_shape: [28, 28, 1]
+  num_classes: 10
+  
+# Training configuration
+training:
+  epochs: 10
+  learning_rate: 0.001
+  weight_decay: 1e-4
+  scheduler: "cosine"
+  early_stopping_patience: 5
+  
+# Quantization configuration
+quantization:
+  method: "qat"  # qat, ptq, hybrid
+  precision: "int8"  # int8, int4, fp16
+  calibration_samples: 1000
+  per_channel: true
+  symmetric: true
+  
+# Evaluation configuration
+evaluation:
+  metrics: ["accuracy", "f1", "latency", "model_size"]
+  benchmark_datasets: ["mnist", "cifar10"]
+  
+# Edge deployment configuration
+deployment:
+  targets: ["tflite", "onnx", "openvino"]
+  optimization_level: "default"
+  enable_pruning: false
+  pruning_ratio: 0.1
+  
+# Logging and monitoring
+logging:
+  level: "INFO"
+  log_dir: "logs"
+  use_wandb: false
+  use_mlflow: true
+  
+# Reproducibility
+seed: 42
+deterministic: true

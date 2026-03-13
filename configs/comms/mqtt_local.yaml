@@ -1,0 +1,110 @@
+# Communication configuration for MQTT local setup
+comms:
+  # MQTT broker configuration
+  mqtt:
+    broker_host: "localhost"
+    broker_port: 1883
+    keepalive: 60
+    client_id: "qat_client"
+    
+    # QoS levels
+    qos_levels:
+      at_most_once: 0
+      at_least_once: 1
+      exactly_once: 2
+    
+    # Topics
+    topics:
+      model_updates: "qat/model/updates"
+      inference_results: "qat/inference/results"
+      system_status: "qat/system/status"
+      calibration_data: "qat/calibration/data"
+    
+    # Security
+    security:
+      use_tls: false
+      username: null
+      password: null
+      ca_cert: null
+      client_cert: null
+      client_key: null
+    
+    # Connection settings
+    connection:
+      clean_session: true
+      auto_reconnect: true
+      reconnect_delay: 5
+      max_reconnect_attempts: 10
+      
+  # WebSocket configuration
+  websocket:
+    host: "localhost"
+    port: 8765
+    path: "/ws"
+    
+    # Message types
+    message_types:
+      inference_request: "inference_request"
+      inference_response: "inference_response"
+      model_info: "model_info"
+      calibration_request: "calibration_request"
+    
+  # Data streaming
+  streaming:
+    # Buffer settings
+    buffer_size: 1000
+    batch_size: 32
+    
+    # Compression
+    compression:
+      enabled: true
+      algorithm: "gzip"
+      level: 6
+    
+    # Serialization
+    serialization:
+      format: "json"  # json, msgpack, pickle
+      include_metadata: true
+      
+  # Edge device communication
+  edge_devices:
+    # Device discovery
+    discovery:
+      enabled: true
+      broadcast_interval: 30
+      timeout: 10
+    
+    # Device management
+    management:
+      auto_register: true
+      heartbeat_interval: 60
+      offline_threshold: 180
+      
+    # OTA updates
+    ota:
+      enabled: false
+      check_interval: 3600
+      rollback_enabled: true
+      canary_percentage: 10
+      
+  # Performance monitoring
+  monitoring:
+    # Metrics collection
+    metrics:
+      enabled: true
+      collection_interval: 60
+      
+    # Alerts
+    alerts:
+      enabled: true
+      thresholds:
+        latency_ms: 100
+        error_rate: 0.05
+        memory_usage: 0.8
+        
+    # Logging
+    logging:
+      level: "INFO"
+      format: "json"
+      max_size_mb: 100
+      backup_count: 5

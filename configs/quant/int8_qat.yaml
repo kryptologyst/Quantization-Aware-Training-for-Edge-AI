@@ -1,0 +1,66 @@
+# Quantization configuration for int8 QAT
+quantization:
+  # Quantization method
+  method: "qat"  # qat, ptq, hybrid
+  
+  # Precision settings
+  precision: "int8"
+  weight_bits: 8
+  activation_bits: 8
+  
+  # QAT specific settings
+  qat:
+    # Training phase configuration
+    training_phase: true
+    fake_quantization: true
+    
+    # Quantization scheme
+    scheme: "per_channel"  # per_tensor, per_channel
+    symmetric: true
+    
+    # Calibration settings
+    calibration:
+      method: "minmax"  # minmax, kl_divergence, percentile
+      samples: 1000
+      percentile: 99.99
+      
+    # Learning rate scheduling for QAT
+    lr_schedule:
+      warmup_epochs: 2
+      decay_factor: 0.1
+      
+  # Advanced quantization options
+  advanced:
+    # Observer settings
+    observer: "minmax"
+    qscheme: "per_channel_symmetric"
+    
+    # Fake quantization settings
+    fake_quant:
+      enabled: true
+      observer_enabled: true
+      quant_min: -128
+      quant_max: 127
+      
+    # Backend configuration
+    backend: "fbgemm"  # fbgemm, qnnpack, onednn
+    
+  # Model-specific quantization
+  model_specific:
+    # Layer-wise quantization settings
+    conv_layers:
+      weight_observer: "minmax"
+      activation_observer: "minmax"
+      
+    linear_layers:
+      weight_observer: "minmax"
+      activation_observer: "minmax"
+      
+    # Skip quantization for certain layers
+    skip_layers: []
+    
+  # Validation and testing
+  validation:
+    compare_with_fp32: true
+    accuracy_threshold: 0.95  # Minimum accuracy retention
+    latency_threshold_ms: 10   # Maximum latency increase
